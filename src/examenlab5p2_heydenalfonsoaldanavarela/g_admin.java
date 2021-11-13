@@ -12,6 +12,23 @@ public class g_admin
     private ArrayList<userComprador> buyer;
     private ArrayList<userVendedor> seller;
     
+    // funcion para login
+    public boolean login(String username, String password)
+    {
+        try
+        {
+            for (userAdministrador a : admin) 
+            {
+                if(username.equals(a.getUsername()) && password.equals(a.getContra()))
+                    return true;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR DE LECTURA DE DATOS");
+        }
+        return false;
+    }
+    
+    
     //  -------------------- Funciones ----------------------- //
     
     /* 

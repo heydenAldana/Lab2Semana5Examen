@@ -18,7 +18,24 @@ public class g_vendedor
     private ArrayList<userVendedor> seller;
     private ArrayList<videojuego> vd;
     private ArrayList<String> juegosvendidos;
+    private g_comprador gc;
     private double rating = 0;
+    
+    // funcion para login
+    public boolean login(String username, String password)
+    {
+        try
+        {
+            for (userVendedor v : seller) 
+            {
+                if(username.equals(v.getUsername()) && password.equals(v.getContra()))
+                    return true;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR DE LECTURA DE DATOS");
+        }
+        return false;
+    }
     
     // ------------------------ Funciones ----------------------- //
     
@@ -110,7 +127,7 @@ public class g_vendedor
         {
             for (userVendedor v : seller) 
             {
-                if(nombre.equals(v.getNombre()))
+                if(nombre.equals(v.getUsername()))
                 {
                     rating += calificacion / 5;
                     v.setEstrellas(rating);
@@ -120,5 +137,52 @@ public class g_vendedor
             JOptionPane.showMessageDialog(null, "ERROR DE LECTURA Y/O ESCRITURA DE DATOS");
         }
     }
+    
+    
     // Vender un juego a comprador (va conectado a comprador)
+    public void venderJuego(String nombre, String vendedor)
+    {
+        try
+        {
+            for (userVendedor v : seller) 
+            {
+                if(vendedor.equals(v.getNombre()))
+                {
+                    // añade a la lista de juegos vendidos
+                    v.setVideojuegosV(nombre);
+                    for (videojuego vj : vd) 
+                    {
+                        if(nombre.equals(vj.getNombre()))
+                        {
+                            if(vj.getCantidad() == 0)
+                            {
+                                JOptionPane.showMessageDialog(null, "ADVERTENCIA: Ya no hay existencias de este juego");
+                                return;
+                            }
+                            vj.setCantidad(vj.getCantidad() - 1);
+                            // El vendedor cobra su dinero
+                            cobrar(v.getUsername(), gc.darDineroAVendedor(vj.getPrecio()));
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR DE LECTURA DE DATOS");
+        }
+    }
+    
+    // Hace la transferencia al saldo del vendedor
+    private void cobrar(String vendedor, double dinero)
+    {
+        try
+        {
+            for (userVendedor v : seller) 
+            {
+                if(vendedor.equals(v.getUsername()))
+                    v.setSaldo(v.getSaldo() + dinero);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR DE LECTURA Y/O ESCRITURA DE DATOS.");
+        }
+    }
 }

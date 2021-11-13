@@ -71,6 +71,15 @@ public class userVendedor extends userPlantilla
     }
     
     
+    public void setVideojuegosV(String nombre)
+    {
+        try
+        {
+            videojuegosV.add(nombre);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR DE LECTURA Y/O ESCRITURA DE DATOS");
+        }
+    }
     // Funciones get y set
 
     

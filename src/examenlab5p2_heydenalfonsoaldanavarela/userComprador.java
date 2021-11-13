@@ -81,6 +81,16 @@ public class userComprador extends userPlantilla
         return getVideojuegosC(nombrevideojuego);
     }
 
+    public void setVideoJuegosC(String nombrejuego)
+    {
+        try
+        {
+            videojuegosC.add(nombre);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ADVERTENCIA: No se pudo agregar el juego a la lista de juegos comprados");
+        }
+    }
+    
     public void setSaldoC(double saldoC) {
         this.saldoC = saldoC;
     }
